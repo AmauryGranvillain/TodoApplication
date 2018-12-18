@@ -11,6 +11,6 @@ export const todoList = [{
 
 export const TodoContext =  React.createContext({
     todoList,
-    addTodo: (title,event) => {},
-    resetTodo: (event) => {}
+    addTodo: (title) => {},
+    resetTodo: () => {}
 })

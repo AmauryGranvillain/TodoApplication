@@ -9,25 +9,22 @@ class TodoContainer extends React.Component{
         
         this.state = {
             todoList: todoList,
-            addTodo : this.addTodo,
-            resetTodo : this.resetTodo
+            addTodo : TodoContext.addTodo,
+            resetTodo : TodoContext.resetTodo
         }
-
-        this.addTodo = this.addTodo.bind(this);
-        this.resetTodo = this.resetTodo.bind(this);
     }
-
-    addTodo(title, event){
-        this.setState((prevState) => ({
-            todoList: [...prevState.todos, {title: title, isDone: false}]
-        }));
-        event.preventDefault();
-    }
-
-    resetTodo(event){
-         this.setState({todoList : []});
-         event.preventDefault();
-    }
+    componentDidMount(){
+        this.setState({
+            addTodo: (title) => {
+                this.setState({
+                    todoList: [...this.state.todoList, {title: title, isDone: false}]
+                });
+            },
+            resetTodo: () => {
+                this.setState({todoList : []});
+            }
+        })
+    }   
 
     render() {
         return (
