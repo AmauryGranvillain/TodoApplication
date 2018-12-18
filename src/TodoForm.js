@@ -14,13 +14,15 @@ class TodoForm extends React.Component{
     handleChangeTitle(event){
         this.setState({title: event.target.value});
     }
-    /*handleSubmit(event){
-        this.addTodo(this.state.title);
+    handleSubmit(event, addTodo){
         event.preventDefault();
+        console.log(event);
+        addTodo(this.state.title);
+
     }
     resetSubmit(event){
         event.preventDefault();
-    }*/
+    }
     
     render(){
         return(
@@ -28,12 +30,12 @@ class TodoForm extends React.Component{
              {
                  ({addTodo, resetTodo}) => {
                      return(
-                        <form>
+                        <form onSubmit={(e) => this.handleSubmit(e, addTodo)}>
                             <label>
                                 Title : <input type="text" value={this.state.title} onChange={this.handleChangeTitle}/>
                             </label>
-                            <input type="submit" value="Add" onClick={(e) => addTodo(this.state.title, e)}/>
-                            <input type="submit" value="Reset" onClick={(e) => resetTodo(e)}/>
+                            <input type="submit" value="Add"/>
+                            <input type="submit" value="Reset" onClick={(e) => {resetTodo(e)}}/>
                         </form>
                      )
                  }
