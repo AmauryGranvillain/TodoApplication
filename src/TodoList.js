@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
-import todosJson from './mocks/todos.json'
-import TodoItem from './TodoItem'
+import todosJson from './mocks/todos.json';
+import TodoItem from './TodoItem';
+import { connect } from 'react-redux';
 
 class TodoList extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
-        const listTodos = this.props.listTodo.map((todo) => {
-            return <TodoItem key={todo.title} title={todo.title} onChange={todo.isDone}/>
-        });
-        if(listTodos.length == 0){
-            return(
-                <div><h2>Todo is empty !</h2></div>
-            );
-        } else {
-            return(
-                <div>{listTodos}</div>
-            );
-        }
-        
+        return( 
+            <div>
+                {
+                    this.props.todos.map((item) => <TodoItem key= {item.title} title={item.title} />)
+                }
+            </div>
+        ) 
     }
 }
 
-export default TodoList;
+const mapStateToProps = state => ({
+    todos: state.todos.list
+});
+
+export default connect(
+    mapStateToProps,
+)(TodoList);
