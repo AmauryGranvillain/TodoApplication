@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import todosJson from './mocks/todos.json'
-import TodoItem from './TodoItem'
+import todosJson from './mocks/todos.json';
+import TodoItem from './TodoItem';
+import {TodoContext} from './TodoContext'
 
 class TodoList extends React.Component{
     constructor(props){
         super(props);
     }
     render(){
-        const listTodos = this.props.listTodo.map((todo) => {
-            return <TodoItem key={todo.title} title={todo.title} onChange={todo.isDone}/>
-        });
-        if(listTodos.length == 0){
-            return(
-                <div><h2>Todo is empty !</h2></div>
-            );
-        } else {
-            return(
-                <div>{listTodos}</div>
-            );
-        }
-        
+        return(
+            <TodoContext.Consumer>
+            {
+                ({todoList}) => {
+                    return(
+                        <div>
+                            {todoList.map((todo) => <TodoItem key={todo.title} title={todo.title} onChange={todo.isDone}></TodoItem>)}
+                        </div>
+                    )
+                }
+            }
+            </TodoContext.Consumer>
+        );        
     }
 }
 

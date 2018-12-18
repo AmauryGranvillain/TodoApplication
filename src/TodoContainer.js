@@ -1,30 +1,42 @@
 import React, { Component } from 'react';
 import TodoList from './TodoList';
-import TodoForm from './TodoForm'
+import TodoForm from './TodoForm';
+import {TodoContext, todoList} from './TodoContext';
 
 class TodoContainer extends React.Component{
     constructor(props){
         super(props);
-        this.state = {listTodo: []}
+        
+        this.state = {
+            todoList: todoList,
+            addTodo : this.addTodo,
+            resetTodo : this.resetTodo
+        }
 
         this.addTodo = this.addTodo.bind(this);
         this.resetTodo = this.resetTodo.bind(this);
     }
 
-    addTodo(title){
-        this.setState({listTodo: [...this.state.listTodo, {title: title, isDone: false}]})
+    addTodo(title, event){
+        this.setState((prevState) => ({
+            todoList: [...prevState.todos, {title: title, isDone: false}]
+        }));
+        event.preventDefault();
     }
 
-    resetTodo(){
-        this.setState({listTodo : []})
+    resetTodo(event){
+         this.setState({todoList : []});
+         event.preventDefault();
     }
 
     render() {
         return (
-          <div className="container-todo">
-            <TodoList listTodo={this.state.listTodo} />
-            <TodoForm addTodo={this.addTodo}/>
-          </div>
+            <div className="container-todo">
+                <TodoContext.Provider value={this.state}>
+                    <TodoList></TodoList>
+                    <TodoForm></TodoForm>
+                </TodoContext.Provider>
+            </div>
         );
       }
 }
